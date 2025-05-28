@@ -1,0 +1,68 @@
+{% extends 'friends/base.html' %}
+ {% block content %}
+ <h2>Мои друзья</h2>
+ <a href="{% url 'add_friend' %}">Добавить друга</a>
+ {% if friends_today %}
+    <h3 style="color: #d30;">Сегодня день рождения 🎉
+ </h3>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Дата рождения</th>
+            <th>Действия</th>
+        </tr>
+        {% for friend in friends_today %}
+        <tr>
+            <td><strong>{{ friend.name }}</strong></td>
+            <td><strong>{{ friend.birthday|date:"d.m.Y" }}</strong></td>
+            <td>
+                <a href="{% url 'edit_friend' friend.id %}">Изменить</a>
+                <a href="{% url 'delete_friend' friend.id %}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+ {% endif %}
+ {% if friends_tomorrow %}
+    <h3 style="color: #3a3;">Завтра день рождения</h3>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Дата рождения</th>
+            <th>Действия</th>
+        </tr>
+        {% for friend in friends_tomorrow %}
+        <tr>
+            <td><strong>{{ friend.name }}</strong></td>
+            <td><strong>{{ friend.birthday|date:"d.m.Y" }}</strong></td>
+            <td>
+                <a href="{% url 'edit_friend' friend.id %}">Изменить</a>
+                <a href="{% url 'delete_friend' friend.id %}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+ {% endif %}
+ {% if other_friends %}
+    <h3>Остальные друзья</h3>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Дата рождения</th>
+            <th>Действия</th>
+        </tr>
+        {% for friend in other_friends %}
+        <tr>
+            <td>{{ friend.name }}</td>
+            <td>{{ friend.birthday|date:"d.m.Y" }}</td>
+            <td>
+                <a href="{% url 'edit_friend' friend.id %}">Изменить</a>
+                <a href="{% url 'delete_friend' friend.id %}">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+ {% else %}
+    <p>У вас пока нет друзей.</p>
+ {% endif %}
+ {% endblock %}

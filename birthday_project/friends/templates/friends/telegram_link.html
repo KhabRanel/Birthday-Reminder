@@ -1,0 +1,17 @@
+{% extends 'friends/base.html' %}
+ {% block content %}
+ <h2>Привязка Telegram</h2>
+ {% if profile.telegram_id %}
+    <p>Ваш аккаунт уже привязан к Telegram. Ваш telegram_id: {{ profile.telegram_id }}<
+    <form method="post" action="{% url 'unlink_telegram' %}">{% csrf_token %}
+        <button type="submit">Отвязать Telegram</button>
+    </form>
+ {% else %}
+    <p>Чтобы связать свой аккаунт с Telegram-ботом, используйте этот код:</p>
+    <code>{{ profile.telegram_code }}</code>
+    <form method="post" action="{% url 'generate_new_code' %}">{% csrf_token %}
+        <button type="submit">Сгенерировать новый код</button>
+    </form>
+    <p>В боте используйте команду: <code>/start &lt;код&gt;</code></p>
+ {% endif %}
+ {% endblock %}

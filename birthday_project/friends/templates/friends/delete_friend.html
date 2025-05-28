@@ -1,0 +1,10 @@
+ {% extends 'friends/base.html' %}
+ {% block content %}
+ <h2>Удалить друга</h2>
+ <p>Вы уверены, что хотите удалить {{ friend.name }}?</p>
+ <form method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить</button>
+    <a href="{% url 'friend_list' %}">Отмена</a>
+ </form>
+ {% endblock %}
