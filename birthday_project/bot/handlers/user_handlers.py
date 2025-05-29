@@ -128,19 +128,20 @@ async def friends_cmd(message: types.Message, state: FSMContext):
         # Формируем текст со списком друзей
         text = "\n".join([f"{f.name} — {f.birthday.strftime('%d.%m')}" for f in friends])
         await message.answer(LEXICON["list_friends"] + text)
-        @router.message(Command("today"))
-        async def today_cmd(message: types.Message, state: FSMContext):
 
-            """
-        Показывает друзей, у которых сегодня день рождения.
-        """
-        profile = await get_or_create_profile_by_telegram_id(message.from_user.id)
-        birthdays = await get_today_birthdays(profile)
 
-        if not birthdays:
-            await message.answer(LEXICON["no_birthdays_today"])
-        else:
-        # Показываем полную дату для именинников
+@router.message(Command("today"))
+async def today_cmd(message: types.Message, state: FSMContext):
 
-            text = "\n".join([f"{f.name} — {f.birthday.strftime('%Y-%m-%d')}" for f in birthdays])
-            await message.answer(LEXICON["birthdays_today"] + text)
+    """
+    Показывает друзей, у которых сегодня день рождения.
+    """
+    profile = await get_or_create_profile_by_telegram_id(message.from_user.id)
+    birthdays = await get_today_birthdays(profile)
+
+    if not birthdays:
+        await message.answer(LEXICON["no_birthdays_today"])
+    else:
+    # Показываем полную дату для именинников
+        text = "\n".join([f"{f.name} — {f.birthday.strftime('%Y-%m-%d')}" for f in birthdays])
+        await message.answer(LEXICON["birthdays_today"] + text)
